@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
+                            <label for="username" class="col-md-4 col-form-label text-md-right">Username </label>
 
                             <div class="col-md-6">
                                 <input id="username" type="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}"  autocomplete="username">
@@ -73,6 +73,18 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation"  autocomplete="new-password">
                             </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="form-check-label col-md-4 col-form-label text-md-right" for="usertype">
+                                <input type="radio" class="form-check-input" name="usertype" value="Candidate">Candidate
+                            </label>
+                        </div>
+                        <div class="form-group row">
+                            <label class="form-check-label col-md-4 col-form-label text-md-right" for="usertype">
+                                <input type="radio" class="form-check-input" name="usertype" value="Company">Company
+                            </label>
                         </div>
 
                         <div class="form-group row mb-0">
