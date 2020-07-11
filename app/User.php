@@ -36,4 +36,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cv()
+    {
+        return $this->hasOne(Cv::class);
+    }
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
 }
