@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'My CV Online') }}</title>
+    <title>My CV Online</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,12 +20,24 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<style>
+    .links > a {
+        color: #636b6f;
+        padding: 0 25px;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: .1rem;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+</style>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
         <div class="container">
             <a class="navbar-brand d-flex align-content-center" href="{{ url('/') }}">
                 <div><img src="/images/icon.png" style="height:20px; border-right: 1px solid #333" class="pr-2"></div>
-                <div class="pl-3 pt-1">{{ config('app.name', 'My CV Online') }} </div>
+                <div class="pl-3 pt-1">My CV Online </div>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -52,10 +64,10 @@
                             </li>
                         @endif
                     @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        <li class="nav-item dropdown links">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle links" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->username }} <span class="caret"></span>
+                                {{ Auth::user()->username }} <span class="caret "></span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -71,6 +83,22 @@
                                 </form>
                             </div>
                         </li>
+                        <div class="flex-center position-ref full-height">
+                            @if (Route::has('login'))
+                                <div class="top-right links">
+                                    @auth
+                                        <a href="{{ url('/') }}">Home</a>
+                                        <a href="{{ url('/profile',[Auth::user()->id]) }}">My Profile</a>
+                                    @else
+                                        <a href="{{ route('login') }}">Login</a>
+
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}">Register</a>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endif
+                        </div>
                     @endguest
                 </ul>
             </div>

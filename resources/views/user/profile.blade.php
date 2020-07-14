@@ -8,16 +8,16 @@
                     <div class="card-header">User profile</div>
 
                     <div class="card-body">
-                        <form method="PATCH" action="{{ route('profile.update', ['user'=>2]) }}" >
+                        <form method="POST" action="{{ route('profile.update', ['user'=>Auth::user()->id]) }}" >
                             @csrf
-
+                            @method('PATCH')
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value={{ $user->name }} autocomplete="name" autofocus>
+                                           value={{ old('name') ?? $user->name }} autocomplete="name" autofocus>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email" readonly
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value={{$user->email}}  autocomplete="email">
+                                           value={{ old('email') ?? $user->email}}  autocomplete="email">
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
                                 <div class="col-md-6">
                                     <input id="username" type="username"
                                            class="form-control @error('username') is-invalid @enderror" name="username"
-                                            autocomplete="username" value={{$user->username}} >
+                                            autocomplete="username" value={{ old('username') ?? $user->username}} >
 
                                     @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                            class="form-control @error('password') is-invalid @enderror" name="password"
-                                           autocomplete="new-password" value={{$user->password}}>
+                                           autocomplete="new-password" value={{ old('password') ?? $user->password}}>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" autocomplete="new-password" value={{$user->password}}>
+                                           name="password_confirmation" autocomplete="new-password" value={{ old('password') ?? $user->password}}>
                                 </div>
                             </div>
 
@@ -93,7 +93,7 @@
                                 <div class="col-md-6">
                                     <input id="username" type="usertype" readonly
                                            class="form-control @error('usertype') is-invalid @enderror" name="usertype"
-                                           value={{$user->usertype}}  autocomplete="usertype">
+                                           value={{ old('usertype') ?? $user->usertype}}  autocomplete="usertype">
 
                                     @error('usertype')
                                     <span class="invalid-feedback" role="alert">

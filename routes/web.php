@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show');
-Route::put('/profile/{user}', 'ProfileController@update')->name('profile.update');
+Route::get('/', 'HomeController@index')->name('home');
+Route::post('/cv', 'CvController@store')->name('cv.store');
+Route::get('/cv/create', 'CvController@create')->name('cv.create');
+Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
+Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');

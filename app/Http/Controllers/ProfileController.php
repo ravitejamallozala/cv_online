@@ -13,24 +13,26 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($user_id)
+    public function show(User $user)
     {
-        $user = User::findOrFail($user_id);
-        return view('profile', [
+        return view('user.profile', [
             'user' => $user,
         ]);
     }
-    public function update(Request $request, $user_id)
-    {
-        dd($request);
-        echo "IN Update method";
-//        dd($userd);
-//        $user = User::find($user_id);
-//        return view('profile', [
-//            'user' => $user,
-//        ]);
-        return view('home');
-    }
 
+    public function update(Request $request, User $user)
+    {
+//         Write Updating logic here get user id and update fields in that User table
+//        dd($request);
+        $data = $request->validate([
+            'name'=> 'required',
+            'email'=> 'required',
+            'username'=> 'required',
+            'password'=> 'required',
+            'usertype'=> 'required',
+        ]);
+        auth()->user()->update($data);
+        return redirect("/profile/{$user->id}");
+    }
 
 }
