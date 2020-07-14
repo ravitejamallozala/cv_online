@@ -10,15 +10,15 @@ use Illuminate\Http\Request;
 class CvController extends Controller
 {
 
-    public function create()
+    public function show()
     {
         return view('cv.create');
 
     }
 
-    public function store()
+    public function update(Request $request, User $user)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'user_id' => '',
             'work_exp' => 'required',
             'skills' => 'required',
@@ -27,7 +27,6 @@ class CvController extends Controller
             'year_of_grad' => ['required', 'digits:4'],
             'projects' => 'required',
         ]);
-//        dd("its here");
         $skills_arr = array_map('trim', explode(',', $data['skills']));
         $user = auth()->user();
         $cv_obj = new Cv();
@@ -37,12 +36,31 @@ class CvController extends Controller
         $cv_obj->projects = $data['projects'];
         $cv_obj->education = $data['education'];
         $cv_obj->user_id = $user->id;
-        $cv_obj->save();
+//        dd($data);
 
-        foreach ($skills_arr as $skill) {
-            $skill_obj = Skill::firstOrNew(['name' => $skill]);
-            $skill_obj->cv_id = $cv_obj->id;
-            $skill_obj->save();
+        if(!is_null($user->cv)) {
+            $user->cv()->update([
+                'work_exp' => $data['work_exp'],
+                'current_location' => $data['current_location'],
+                'year_of_grad' => $data['year_of_grad'],
+                'projects' => $data['projects'],
+                'education' => $data['education']
+            ]);
+//            dd($user->cv->id);
+            Skill::where('cv_id',$user->cv->id)->delete();
+            foreach ($skills_arr as $skill) {
+                $skill_obj = Skill::firstOrNew(['name' => $skill]);
+                $skill_obj->cv_id = $user->cv->id;
+                $skill_obj->save();
+            }
+        } else {
+            $user->cv()->create($data);
+            foreach ($skills_arr as $skill) {
+                $skill_obj = Skill::firstOrNew(['name' => $skill]);
+                $skill_obj->cv_id = $user->cv->id;
+                $skill_obj->save();
+            }
+
         }
 
         return redirect('/profile/' . auth()->user()->id);

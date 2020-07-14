@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/cv', 'CvController@store')->name('cv.store');
-Route::get('/cv/create', 'CvController@create')->name('cv.create');
+Route::patch('/cv/{user}', 'CvController@update')->name('cv.update');
+Route::get('/cv/{user}', 'CvController@show')->name('cv.show');
 Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');

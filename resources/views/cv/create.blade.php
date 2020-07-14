@@ -8,9 +8,9 @@
                     <div class="card-header">Your CV</div>
 
                     <div class="card-body">
-                        <form method="post" action="/cv">
+                        <form method="post" action="{{ route('cv.update', ['user'=>Auth::user()->id]) }}">
                             @csrf
-
+                            @method('PATCH')
                             <div class="form-group row">
                                 <label for="work_exp" class="col-md-4 col-form-label text-md-right">Work
                                     Experience </label>
@@ -18,7 +18,14 @@
                                 <div class="col-md-6">
                                     <textarea id="work_exp" type="text"
                                               class="form-control @error('work_exp') is-invalid @enderror"
-                                              name="work_exp" value="{{ old('work_exp') }}" autocomplete="work_exp"
+                                              name="work_exp"
+                                              value=" {{ $user->name ?? '' }}"
+{{--                                              @if (is_null($user->cv))--}}
+{{--                                                  value="{{ old('work_exp') }}"--}}
+{{--                                              @else--}}
+{{--                                                  value="{{ $user->cv->work_exp }}"--}}
+{{--                                              @endif--}}
+                                                  autocomplete="work_exp"
                                               autofocus></textarea>
 
                                     @error('work_exp')
@@ -38,7 +45,7 @@
                                            value="{{ old('skills') }}">
 
                                     @error('skills')
-                                        <strong>{{ $message }}</strong>
+                                    <strong>{{ $message }}</strong>
                                     @enderror
                                 </div>
                             </div>
