@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 class CvController extends Controller
 {
 
-    public function show()
+    public function show(User $user)
     {
-        return view('cv.create');
+        return view('cv.create', compact("user"));
 
     }
 
@@ -38,7 +38,7 @@ class CvController extends Controller
         $cv_obj->user_id = $user->id;
 //        dd($data);
 
-        if(!is_null($user->cv)) {
+        if (!is_null($user->cv)) {
             $user->cv()->update([
                 'work_exp' => $data['work_exp'],
                 'current_location' => $data['current_location'],
@@ -47,7 +47,7 @@ class CvController extends Controller
                 'education' => $data['education']
             ]);
 //            dd($user->cv->id);
-            Skill::where('cv_id',$user->cv->id)->delete();
+            Skill::where('cv_id', $user->cv->id)->delete();
             foreach ($skills_arr as $skill) {
                 $skill_obj = Skill::firstOrNew(['name' => $skill]);
                 $skill_obj->cv_id = $user->cv->id;
