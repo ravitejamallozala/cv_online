@@ -19,14 +19,13 @@
                                     <textarea id="work_exp" type="text"
                                               class="form-control @error('work_exp') is-invalid @enderror"
                                               name="work_exp"
-                                              value=" {{ $user->name ?? '' }}"
 {{--                                              @if (is_null($user->cv))--}}
 {{--                                                  value="{{ old('work_exp') }}"--}}
 {{--                                              @else--}}
 {{--                                                  value="{{ $user->cv->work_exp }}"--}}
 {{--                                              @endif--}}
                                                   autocomplete="work_exp"
-                                              autofocus></textarea>
+                                              autofocus><?php echo  $user->cv->work_exp ?? old('work_exp') ?></textarea>
 
                                     @error('work_exp')
                                     <span class="invalid-feedback" role="alert">
@@ -42,7 +41,7 @@
                                 <div class="col-md-6">
                                     <input id="skills" type="text" data-role="tagsinput"
                                            class="form-control" name="skills" placeholder="Enter comma separated values"
-                                           value="{{ old('skills') }}">
+                                           value="{{ implode(", ",$user->cv->skills->pluck('name')->toArray()) ?? old('skills') }}">
 
                                     @error('skills')
                                     <strong>{{ $message }}</strong>
@@ -58,7 +57,7 @@
                                 <div class="col-md-6">
                                     <input id="current_location" type="text"
                                            class="form-control @error('current_location') is-invalid @enderror"
-                                           name="current_location" value="{{ old('current_location') }}"
+                                           name="current_location" value="{{ $user->cv->current_location ?? old('current_location') }}"
                                            autocomplete="current_location">
 
                                     @error('current_location')
@@ -76,7 +75,7 @@
                                 <div class="col-md-6">
                                     <input id="education" type="text"
                                            class="form-control @error('education') is-invalid @enderror"
-                                           name="education" value="{{ old('education') }}" autocomplete="education">
+                                           name="education" value="{{ $user->cv->education ?? old('education') }}" autocomplete="education">
 
                                     @error('education')
                                     <span class="invalid-feedback" role="alert">
@@ -92,7 +91,7 @@
                                 <div class="col-md-6">
                                     <input id="year_of_grad" type="text"
                                            class="form-control @error('year_of_grad') is-invalid @enderror"
-                                           name="year_of_grad" value="{{ old('year_of_grad') }}"
+                                           name="year_of_grad" value="{{ $user->cv->year_of_grad ?? old('year_of_grad') }}"
                                            autocomplete="year_of_grad">
 
                                     @error('year_of_grad')
@@ -109,8 +108,8 @@
                                 <div class="col-md-6">
                                     <textarea id="projects" type="text"
                                               class="form-control @error('projects') is-invalid @enderror"
-                                              name="projects" value="{{ old('projects') }}"
-                                              autocomplete="projects"> </textarea>
+                                              name="projects"
+                                              autocomplete="projects"><?php echo  $user->cv->projects ?? old('projects') ?> </textarea>
 
                                     @error('projects')
                                     <span class="invalid-feedback" role="alert">
