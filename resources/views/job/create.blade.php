@@ -182,6 +182,9 @@
                                     <button type="submit" class="btn btn-primary">
                                         Update Job Offer
                                     </button>
+                                    <a data-method="delete"  href="{{ route('job.destroy', ['user'=>Auth::user()->id]) }}" id="del_btn" class="ravi btn btn-danger">
+                                        Delete Job
+                                    </a>
                                 </div>
                             </div>
                         </form>

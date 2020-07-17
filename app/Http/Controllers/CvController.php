@@ -16,6 +16,16 @@ class CvController extends Controller
 
     }
 
+    public function delete(User $user)
+    {
+        $user = auth()->user();
+        if (!is_null($user->cv)) {
+            Skill::where('cv_id', $user->cv->id)->delete();
+            $user->cv->delete();
+        }
+        return redirect('/cv/' . auth()->user()->id);
+    }
+
     public function update(Request $request, User $user)
     {
         $data = $request->validate([

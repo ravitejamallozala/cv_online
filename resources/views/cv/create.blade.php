@@ -126,8 +126,12 @@
                                     <button type="submit" class="btn btn-primary">
                                         Update Cv
                                     </button>
+                                    <a data-method="delete"  href="{{ route('cv.destroy', ['user'=>Auth::user()->id]) }}" id="del_btn" class="ravi btn btn-danger">
+                                        Delete Cv
+                                    </a>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

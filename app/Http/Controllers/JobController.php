@@ -16,6 +16,16 @@ class JobController extends Controller
         return view('job.create', compact("user"));
     }
 
+    public function delete(User $user)
+    {
+        $user = auth()->user();
+        if (!is_null($user->job)) {
+            Skill::where('job_id', $user->job->id)->delete();
+            $user->job->delete();
+        }
+        return redirect('/job/' . auth()->user()->id);
+    }
+
     public function update(Request $request, User $user)
     {
 //        dd("Hellosss");
