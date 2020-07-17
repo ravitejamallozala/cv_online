@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -31,7 +32,13 @@ class ProfileController extends Controller
             'password'=> 'required',
             'usertype'=> 'required',
         ]);
-        auth()->user()->update($data);
+        auth()->user()->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'usertype' => $data['usertype'],
+        ]);
         return redirect("/profile/{$user->id}");
     }
 

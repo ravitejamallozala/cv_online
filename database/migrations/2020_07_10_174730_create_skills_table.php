@@ -15,11 +15,13 @@ class CreateSkillsTable extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('cv_id');
+            $table->unsignedBigInteger('cv_id')->nullable();
+            $table->unsignedBigInteger('job_id')->nullable();
             $table->string('name')->nullable();
             $table->timestamps();
 
             $table->index('cv_id');
+            $table->index('job_id');
         });
     }
 

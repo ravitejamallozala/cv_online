@@ -94,7 +94,7 @@
                 @endif
                 @if (Auth::user()->usertype == 'Company')
                     <a href="/">Look for Candidates </a>
-                    <a href="/">Post a Job Offer</a>
+                    <a href="{{ route('job.show', ['user'=>Auth::user()->id]) }}">Post a Job Offer</a>
                 @endif
             @else
                 <a href="/">Look for Available Jobs </a>

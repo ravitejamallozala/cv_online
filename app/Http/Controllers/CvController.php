@@ -46,7 +46,6 @@ class CvController extends Controller
                 'projects' => $data['projects'],
                 'education' => $data['education']
             ]);
-//            dd($user->cv->id);
             Skill::where('cv_id', $user->cv->id)->delete();
             foreach ($skills_arr as $skill) {
                 $skill_obj = Skill::firstOrNew(['name' => $skill]);
@@ -54,16 +53,17 @@ class CvController extends Controller
                 $skill_obj->save();
             }
         } else {
-            $user->cv()->create($data);
+            $temp = $user->cv()->create($data);
             foreach ($skills_arr as $skill) {
                 $skill_obj = Skill::firstOrNew(['name' => $skill]);
-                $skill_obj->cv_id = $user->cv->id;
+                $skill_obj->cv_id = $temp->id;
                 $skill_obj->save();
             }
 
         }
 
-        return redirect('/profile/' . auth()->user()->id);
+        return redirect('/');
+//        return redirect('/cv/' . auth()->user()->id);
 
     }
 }

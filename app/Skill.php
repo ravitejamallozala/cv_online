@@ -11,8 +11,12 @@ class Skill extends Model
         'name', 'user_id'
     ];
     protected $guarded = [];
-    public function user()
+    public function cv()
     {
         return $this->belongsTo(Cv::class);
+    }
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
     }
 }

@@ -16,7 +16,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+
 Route::patch('/cv/{user}', 'CvController@update')->name('cv.update');
 Route::get('/cv/{user}', 'CvController@show')->name('cv.show');
+
+Route::get('/job/{user}', 'JobController@show')->name('job.show');
+Route::patch('/job/{user}', 'JobController@update')->name('job.update');
+
 Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
