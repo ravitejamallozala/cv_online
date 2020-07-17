@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use App\Skill;
 use App\User;
 use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
@@ -10,21 +11,24 @@ use Symfony\Component\Console\Input\Input;
 class JobController extends Controller
 {
     //
-    public function show(User $user){
+    public function show(User $user)
+    {
         return view('job.create', compact("user"));
     }
-    public function update(Request $request, User $user){
+
+    public function update(Request $request, User $user)
+    {
 //        dd("Hellosss");
         $data = $request->validate([
-            'title'=>['required', 'string', 'max:255'],
-            'description'=>['required', 'string', 'max:255'],
-            'salary'=>['required', 'integer'],
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'salary' => ['required', 'integer'],
             'skills' => 'required',
-            'type'=>['required', 'string', 'max:255'],
-            'company_name'=>['required', 'string', 'max:255'],
-            'city'=>['required', 'string', 'max:255'],
-            'creation_date'=>['required', 'date_format:Y-m-d'],
-            'expiry_date'=>['required', 'date_format:Y-m-d'],
+            'type' => ['required', 'string', 'max:255'],
+            'company_name' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'creation_date' => ['required', 'date_format:Y-m-d'],
+            'expiry_date' => ['required', 'date_format:Y-m-d'],
         ]);
         $skills_arr = array_map('trim', explode(',', $data['skills']));
         $user = auth()->user();
@@ -35,7 +39,39 @@ class JobController extends Controller
         $job->type = $data['type'];
         $job->company_name = $data['company_name'];
         $job->city = $data['city'];
-        $job->creation_date = date('Y-m-d', strtotime($data['creation_date']));
-        $job->expiry_date = date('Y-m-d', strtotime($data['expiry_date']));
+        $creation_date = date('Y-m-d', strtotime($data['creation_date']));
+        $expiry_date = date('Y-m-d', strtotime($data['expiry_date']));
+        $job->creation_date = $creation_date;
+        $job->expiry_date = $expiry_date;
+
+        if (!is_null($user->job)) {
+            $user->job()->update([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'salary' => $data['salary'],
+                'type' => $data['type'],
+                'company_name' => $data['company_name'],
+                'city' => $data['city'],
+                'creation_date' => $creation_date,
+                'expiry_date' => $expiry_date
+            ]);
+            Skill::where('job_id', $user->job->id)->delete();
+            foreach ($skills_arr as $skill) {
+                $skill_obj = Skill::firstOrNew(['name' => $skill]);
+                $skill_obj->job_id = $user->job->id;
+                $skill_obj->save();
+            }
+        } else {
+            $temp = $user->job()->create($data);
+            foreach ($skills_arr as $skill) {
+                $skill_obj = Skill::firstOrNew(['name' => $skill]);
+                $skill_obj->job_id = $temp->id;
+                $skill_obj->save();
+            }
+
+            return redirect('/job/' . auth()->user()->id);
+
+        }
+
     }
 }
