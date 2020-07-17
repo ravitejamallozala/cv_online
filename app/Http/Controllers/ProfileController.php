@@ -9,9 +9,19 @@ use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
 {
     //
-    public function __construct()
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
+    public function candidates()
     {
-        $this->middleware('auth');
+        $users = User::where('usertype', 'Candidate')->get();
+        return view('user.candidates', compact("users"));
+    }
+    public function detail(User $user)
+    {
+        return view('user.detail', compact("user"));
     }
 
     public function show(User $user)

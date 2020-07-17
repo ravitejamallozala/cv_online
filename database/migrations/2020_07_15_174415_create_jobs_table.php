@@ -16,12 +16,14 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
-            $table->unsignedBigInteger('salary')->nullable();
             $table->string('type')->nullable();
             $table->string('company_name')->nullable();
             $table->string('city')->nullable();
+
+            $table->unsignedBigInteger('salary')->nullable();
             $table->date('creation_date')->nullable();
             $table->date('expiry_date')->nullable();
             $table->timestamps();

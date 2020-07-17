@@ -89,15 +89,16 @@
         <div class="links">
             @auth
                 @if (Auth::user()->usertype == 'Candidate')
-                    <a href="/">Look for Available Jobs </a>
+                    <a href="{{ route('job.getall') }}">Look for Available Jobs </a>
                     <a href="{{ route('cv.show', ['user'=>Auth::user()->id]) }}">Upload Your CV </a>
                 @endif
                 @if (Auth::user()->usertype == 'Company')
-                    <a href="/">Look for Candidates </a>
+                        <a href="{{ route('job.getall') }}">Look for Available Jobs </a>
+                        <a href="{{ route('profile.getall') }}">Look for Candidates </a>
                     <a href="{{ route('job.show', ['user'=>Auth::user()->id]) }}">Post a Job Offer</a>
                 @endif
             @else
-                <a href="/">Look for Available Jobs </a>
+                <a href="{{ route('job.getall') }}">Look for Available Jobs </a>
 
             @endauth
             <a href="https://laracasts.com">Contact Us</a>

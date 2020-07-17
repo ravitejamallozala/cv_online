@@ -26,6 +26,18 @@ class JobController extends Controller
         return redirect('/job/' . auth()->user()->id);
     }
 
+    public function jobs()
+    {
+        $users = User::where('usertype', 'Company')->get();
+        return view('job.jobs', compact("users"));
+    }
+
+    public function detail(User $user)
+    {
+        return view('job.detail', compact("user"));
+    }
+
+
     public function update(Request $request, User $user)
     {
 //        dd("Hellosss");
