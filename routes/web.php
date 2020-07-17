@@ -31,3 +31,4 @@ Route::get('/profile/{user}', 'ProfileController@show')->name('profile.show');
 Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
 Route::get('/candidates', 'ProfileController@candidates')->name('profile.getall');
 Route::get('/candidate/{user}', 'ProfileController@detail')->name('profile.detail');
+Route::post('/candidate/search', 'ProfileController@search')->name('profile.search');
