@@ -8,10 +8,10 @@
                 @foreach ($users as $user)
                     <div class="card  border-primary mb-3" style="width: 18rem;">
                         <div class="card-body">
-                            <h3 class="card-title font-weight-bold"> {{ $user->name }}</h3>
-                            <p class="card-text">{{ $user->cv->education }}</p>
-                            <p class="card-text">{{ $user->cv->work_exp }}</p>
-                            <p class="card-text">{{ $user->cv->current_location }}</p>
+                            <h3 class="card-title font-weight-bold"> <b>Name: </b>{{ $user->name }}</h3>
+                            <p class="card-text"><b>Education: </b>{{ $user->cv->education }}</p>
+                            <p class="card-text"><b>Work Exp: </b>{{ $user->cv->work_exp }}</p>
+                            <p class="card-text"><b>Location: </b>{{ $user->cv->current_location }}</p>
                             <a type="button" href="{{ route('profile.detail', ['user'=>$user]) }}" class="btn btn-info">View Profile</a>
                         </div>
                     </div>

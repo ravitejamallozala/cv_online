@@ -30,7 +30,7 @@
                     @endif
                 </div>
                 <div class="card-footer text-muted">
-                    <a href="{{ route('profile.getall') }}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('job.getall') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
