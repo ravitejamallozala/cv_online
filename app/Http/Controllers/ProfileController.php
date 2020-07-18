@@ -18,17 +18,21 @@ class ProfileController extends Controller
 
     public function candidates()
     {
+        $user = auth()->user();
+        $this->authorize('view', $user);
         $users = User::where('usertype', 'Candidate')->get();
         return view('user.candidates', compact("users"));
     }
 
     public function detail(User $user)
     {
+        $this->authorize('update', $user);
         return view('user.detail', compact("user"));
     }
 
     public function show(User $user)
     {
+        $this->authorize('update', $user);
         return view('user.profile', [
             'user' => $user,
         ]);

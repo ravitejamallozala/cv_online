@@ -6,6 +6,7 @@ use App\Job;
 use App\Skill;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Input\Input;
 
 class JobController extends Controller
@@ -13,11 +14,28 @@ class JobController extends Controller
     //
     public function show(User $user)
     {
+
+        $u = Auth::user();
+        if(is_null($u)){
+            $this->authorize('view', $user->job);
+        }
+//        dd(!is_null($u->cv) );
+//                  false                Yrue
+        if (!is_null($user->job) or $user->id != $u->id) {
+            $this->authorize('view', $user->job);
+        }
         return view('job.create', compact("user"));
     }
-
     public function delete(User $user)
-    {
+    {$u = Auth::user();
+        if(is_null($u)){
+            $this->authorize('view', $user->job);
+        }
+//        dd(!is_null($u->cv) );
+//                  false                Yrue
+        if (!is_null($user->job) or $user->id != $u->id) {
+            $this->authorize('view', $user->job);
+        }
         $user = auth()->user();
         if (!is_null($user->job)) {
             Skill::where('job_id', $user->job->id)->delete();

@@ -6,18 +6,35 @@ use App\Cv;
 use App\Skill;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CvController extends Controller
 {
 
     public function show(User $user)
     {
+        $u = Auth::user();
+//        dd(!is_null($u->cv) );
+//                  false                Yrue
+        if(is_null($u)){
+            $this->authorize('view', $user->cv);
+        }
+        if (!is_null($u->cv) or  $user->id != $u->id) {
+            $this->authorize('view', $user->cv);
+        }
         return view('cv.create', compact("user"));
 
     }
 
     public function delete(User $user)
     {
+        $u = Auth::user();
+        if(is_null($u)){
+            $this->authorize('view', $user->cv);
+        }
+        if (!is_null($u->cv) or  $user->id != $u->id) {
+            $this->authorize('view', $user->cv);
+        }
         $user = auth()->user();
         if (!is_null($user->cv)) {
             Skill::where('cv_id', $user->cv->id)->delete();
