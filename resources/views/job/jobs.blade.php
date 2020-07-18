@@ -14,7 +14,7 @@
                                 <p class="card-text"><b>Company: </b>{{ $user->job->company_name }}</p>
                                 <p class="card-text"><b>description: </b>{{ $user->job->description }}</p>
                                 <a type="button" href="{{ route('job.detail', ['user'=>$user]) }}" class="btn btn-info">View
-                                    Profile</a>
+                                    Job Offer</a>
                             </div>
                         </div>
                     @endif
