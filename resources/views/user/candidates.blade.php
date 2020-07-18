@@ -13,6 +13,8 @@
         <div class="row pt-3">
             <div class="card-deck">
                 @foreach ($users as $user)
+
+                    @if(!is_null($user->cv))
                     <div class="card  border-primary mb-3" style="width: 18rem;">
                         <div class="card-body">
                             <h3 class="card-title font-weight-bold"> {{ $user->name }}</h3>
@@ -23,6 +25,7 @@
                                 Profile</a>
                         </div>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>

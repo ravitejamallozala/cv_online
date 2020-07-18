@@ -90,10 +90,8 @@ class JobController extends Controller
                 $skill_obj->job_id = $temp->id;
                 $skill_obj->save();
             }
-
-            return redirect('/job/' . auth()->user()->id);
-
         }
+        return redirect('/job/' . auth()->user()->id);
 
     }
 }
