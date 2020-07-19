@@ -91,6 +91,7 @@
                 @if (Auth::user()->usertype == 'Candidate')
                     <a href="{{ route('job.getall') }}">Look for Available Jobs </a>
                     <a href="{{ route('cv.show', ['user'=>Auth::user()->id]) }}">Upload Your CV </a>
+                    <a href="{{ route('profile.detail', ['user'=>Auth::user()->id]) }}">Visualize Your CV </a>
                 @endif
                 @if (Auth::user()->usertype == 'Company')
                         <a href="{{ route('job.getall') }}">Look for Available Jobs </a>

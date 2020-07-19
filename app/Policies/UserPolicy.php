@@ -32,6 +32,11 @@ class UserPolicy
         return $user->usertype === 'Company';
     }
 
+    public function viewdetail(User $user, User $model)
+    {
+        return $user->id === $model->id or $user->usertype === 'Company';
+    }
+
     /**
      * Determine whether the user can create models.
      *

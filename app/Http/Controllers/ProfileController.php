@@ -26,7 +26,7 @@ class ProfileController extends Controller
 
     public function detail(User $user)
     {
-        $this->authorize('view', $user);
+        $this->authorize('viewdetail', $user);
         return view('user.detail', compact("user"));
     }
 
