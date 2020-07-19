@@ -27,6 +27,9 @@ class ProfileController extends Controller
     public function detail(User $user)
     {
         $this->authorize('viewdetail', $user);
+        if (is_null($user->cv)) {
+            return redirect("/cv/{$user->id}");
+        }
         return view('user.detail', compact("user"));
     }
 
